@@ -5,3 +5,4 @@
 !*.js
 !*.css
 !*.md
+!*.astro
