@@ -19,6 +19,30 @@ let initialState = {
   },
   loading: false,
 };
+let decodeFetchResult = (json): api_result =>
+  Json.Decode.{
+    message: json |> field("message", string),
+    status: json |> field("status", string),
+  };
+
+let fetchImage = callback => {
+  Js.Promise.(
+    Fetch.fetch("https://dog.ceo/api/breeds/image/random")
+    |> then_(Fetch.Response.json)
+    |> then_(json => {
+         let data = decodeFetchResult(json);
+         callback(data);
+         resolve();
+       })
+    |> catch(err => {
+         let data = {message: "", status: "error"};
+         Js.log2("Error", err);
+         callback(data);
+         resolve();
+       })
+    |> ignore
+  );
+};
 
 [@react.component]
 let make = () => {
@@ -34,31 +58,6 @@ let make = () => {
 
   let loadingImage = () => <img src="/dog.svg" alt="dog" />;
 
-  let decodeFetchResult = (json): api_result =>
-    Json.Decode.{
-      message: json |> field("message", string),
-      status: json |> field("status", string),
-    };
-
-  let fetchImage = () => {
-    Js.Promise.(
-      Fetch.fetch("https://dog.ceo/api/breeds/image/random")
-      |> then_(Fetch.Response.json)
-      |> then_(json => {
-           let data = decodeFetchResult(json);
-           dispatch(Loaded(data));
-           resolve();
-         })
-      |> catch(err => {
-           let data = {message: "", status: "error"};
-           Js.log2("Failure!!", err);
-           dispatch(Loaded(data));
-           resolve();
-         })
-      |> ignore
-    );
-  };
-
   let dogImage = (~data: api_result) =>
     <div>
       <img
@@ -68,7 +67,7 @@ let make = () => {
       <button
         onClick={_ => {
           dispatch(Loading);
-          fetchImage();
+          fetchImage(data => dispatch(Loaded(data)));
         }}>
         {React.string("Fetch another image")}
       </button>
