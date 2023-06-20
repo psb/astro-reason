@@ -21,6 +21,5 @@ pnpm-debug.log*
 .DS_Store
 
 # opam
-.DS_Store
 _build
 _opam
