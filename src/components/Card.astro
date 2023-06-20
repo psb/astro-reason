@@ -3,14 +3,22 @@ export interface Props {
   title: string;
   body: string;
   href: string;
+  showReasonLogo?: boolean;
 }
 
-const { href, title, body } = Astro.props;
+const { href, title, body, showReasonLogo } = Astro.props;
 ---
 
 <li class="link-card">
   <a href={href}>
-    <h2 class="text-xl font-semibold">
+    <h2 class="flex items-center text-xl font-semibold">
+      {
+        showReasonLogo ? (
+          <img src="/icon_50.png" width="30" class="mr-1" alt="Reason Logo" />
+        ) : (
+          <span />
+        )
+      }
       {title}
       <span>&rarr;</span>
     </h2>

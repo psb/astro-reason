@@ -1,4 +1,4 @@
-project_name = astro-with-a-sprinkle-of-reason
+project_name = astro-reason
 
 DUNE = opam exec -- dune
 
@@ -20,7 +20,7 @@ init: create-switch install ## Configure everything to develop this repository i
 
 .PHONY: install
 install: ## Install development dependencies
-	# npm install --legacy-peer-deps
+	npm install --legacy-peer-deps
 	opam update
 	opam install -y . --deps-only
 	opam pin -y add $(project_name).dev .

@@ -1,6 +1,6 @@
 {
   "ocaml.sandbox": {
     "kind": "opam",
-    "switch": "${workspaceFolder:astro-with-a-sprinkle-of-reason}"
+    "switch": "${workspaceFolder:astro-reason}"
   }
 }

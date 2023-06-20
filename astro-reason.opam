@@ -4,8 +4,8 @@ description: "Astro, Reason React, Melange and Tailwind"
 maintainer: ["Paul Bacchus"]
 authors: ["Paul Bacchus"]
 license: "MIT"
-homepage: "https://github.com/psb/astro-with-a-sprinkle-of-reason"
-bug-reports: "https://github.com/psb/astro-with-a-sprinkle-of-reason/issues"
+homepage: "https://github.com/psb/astro-reason"
+bug-reports: "https://github.com/psb/astro-reason/issues"
 depends: [
   "ocaml" {>= "4.14.0" & < "5.0.0"}
   "reason" {>= "3.8.1" & < "4.0.0"}
@@ -18,4 +18,4 @@ depends: [
   "odoc" {with-doc}
   "ocamlformat" {>= "0.25.0"}
 ]
-dev-repo: "git+https://github.com/psb/astro-with-a-sprinkle-of-reason.git"
+dev-repo: "git+https://github.com/psb/astro-reason.git"

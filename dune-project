@@ -2,7 +2,7 @@
 
 (using melange 0.1)
 
-(name astro-with-a-sprinkle-of-reason)
+(name astro-reason)
 
 (license "MIT")
 
@@ -10,12 +10,12 @@
 
 (authors Paul Bacchus)
 
-(homepage https://github.com/psb/astro-with-a-sprinkle-of-reason)
+(homepage https://github.com/psb/astro-reason)
 
-(bug_reports https://github.com/psb/astro-with-a-sprinkle-of-reason/issues)
+(bug_reports https://github.com/psb/astro-reason/issues)
 
 (package
  (allow_empty)
- (name astro-with-a-sprinkle-of-reason)
+ (name astro-reason)
  (synopsis "Astro, Reason React and Melange")
  (description "Astro, Reason React and Melange"))
