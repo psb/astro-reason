@@ -1,7 +1,7 @@
 (melange.emit
  (target output)
  (alias reason)
- (libraries reason-react)
+ (libraries reason-react melange-fetch bs_json)
  (preprocess
   (pps reactjs-jsx-ppx))
  (module_systems es6))

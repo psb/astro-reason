@@ -1,8 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Card from "../components/Card.astro";
+import { make as Dog } from "../../_build/default/src/components/output/src/components/Dog.js";
 ---
 
 <Layout title="Dogs">
-  <div class="container max-w-md mx-auto px-4">Dogs</div>
+  <Dog />
 </Layout>

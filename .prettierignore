@@ -3,6 +3,7 @@
 # Unignore:
 !*.html
 !*.js
+!*.mjs
 !*.css
 !*.md
 !*.astro

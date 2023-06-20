@@ -17,5 +17,9 @@ depends: [
   "dot-merlin-reader" {dev}
   "odoc" {with-doc}
   "ocamlformat" {>= "0.25.0"}
+  "melange-fetch" {dev}
+]
+pin-depends: [
+    ["melange.fetch.dev" "git+https://github.com/melange-community/melange-fetch.git#master"]
 ]
 dev-repo: "git+https://github.com/psb/astro-reason.git"
