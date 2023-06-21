@@ -1,0 +1,8 @@
+(melange.emit
+ (target output)
+ (promote (until-clean))
+ (alias reason)
+ (libraries reason-react melange-fetch bs_json components)
+ (preprocess
+  (pps reactjs-jsx-ppx))
+ (module_systems es6))

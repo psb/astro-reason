@@ -11,6 +11,7 @@ This is a basic project that shows you how you can mix [Astro](https://docs.astr
 │   ├── favicon.svg
 │   └── ...
 ├── src/
+│   ├── dune
 │   ├── components/
 │   │   ├── Card.astro
 │   │   ├── Dog.re
@@ -18,6 +19,10 @@ This is a basic project that shows you how you can mix [Astro](https://docs.astr
 │   │   └── dune
 │   ├── layouts/
 │   │   └── Layout.astro
+│   ├── output/
+│   │   └── src/
+│   │       └── components/
+│   │           └── Dog.js
 │   └── pages/
 │       ├── dogs.astro
 │       └── index.astro
@@ -34,13 +39,13 @@ This is a basic project that shows you how you can mix [Astro](https://docs.astr
 >
 > Any static assets, like images, can be placed in the `public/` directory.
 
-Reason React components are also placed in the components folder (along with their interface files). The `dune` file in the components folder tells Dune how to process the components and output JS.
+Reason React components are also placed in the components folder (along with their interface files). The `dune` file in the components folder tells Dune how to process the components to JS.
 
-The `_build` directory is where the output JS is placed.
+The `dune` file at the root of the project is used to tell Dune how to use any Reason/OCaml packages installed from npm. The `src/dune` file is used to tell Dune how and where to emit JS. It is worth noting that the JS is first built into the `_build` directory (specifically the `_build/default/src/output` folder) and then promoted back out to the `src/output` directory. This makes it easier to import components from astro files.
+
+**TODO**: functions
 
 The `<project_name>.opam` file contains the Reason/OCaml packages required and `package.json` contains the JS packages required.
-
-The `dune` file at the root of the project is used to tell Dune how to use any Reason/OCaml packages installed from npm.
 
 The `dune-project` file describes the project.
 

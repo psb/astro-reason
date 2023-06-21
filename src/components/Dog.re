@@ -70,7 +70,7 @@ let make = () => {
       <a
         className="rounded-md p-4 mt-2 bg-slate-400 text-white hover:bg-slate-500"
         href="/">
-        {React.string("Back")}
+        {React.string("Home")}
       </a>
       <button
         className="rounded-md p-4 mt-2 bg-green-500 text-white hover:bg-green-600"
