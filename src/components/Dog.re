@@ -59,23 +59,25 @@ let make = () => {
   let loadingImage = () => <img src="/dog.svg" alt="dog" />;
 
   let dogImage = (~data: api_result) =>
-    <div className="text-center">
-      <img
-        src={data.status != "success" ? "/500.jpg" : data.message}
-        alt="dog"
-        className="mx-auto"
-      />
-      <button
-        className="rounded-md p-4 mt-2 bg-green-500 text-white hover:bg-green-600"
-        onClick={_ => {
-          dispatch(Loading);
-          fetchImage(data => dispatch(Loaded(data)));
-        }}>
-        {React.string("Fetch another image")}
-      </button>
-    </div>;
+    <img
+      src={data.status != "success" ? "/500.jpg" : data.message}
+      alt="dog"
+      className="mx-auto"
+    />;
 
-  <div className="container mx-auto max-w-md p-4">
-    {state.loading ? loadingImage() : dogImage(~data=state.data)}
+  <div className="container mx-auto max-w-md text-center p-4">
+    {state.loading
+       ? loadingImage()
+       : <>
+           {dogImage(~data=state.data)}
+           <button
+             className="rounded-md p-4 mt-2 bg-green-500 text-white hover:bg-green-600"
+             onClick={_ => {
+               dispatch(Loading);
+               fetchImage(data => dispatch(Loaded(data)));
+             }}>
+             {React.string("Fetch another image")}
+           </button>
+         </>}
   </div>;
 };
