@@ -65,19 +65,25 @@ let make = () => {
       className="mx-auto"
     />;
 
+  let buttons = () =>
+    <div className="flex justify-around">
+      <a
+        className="rounded-md p-4 mt-2 bg-slate-400 text-white hover:bg-slate-500"
+        href="/">
+        {React.string("Back")}
+      </a>
+      <button
+        className="rounded-md p-4 mt-2 bg-green-500 text-white hover:bg-green-600"
+        onClick={_ => {
+          dispatch(Loading);
+          fetchImage(data => dispatch(Loaded(data)));
+        }}>
+        {React.string("Fetch another image")}
+      </button>
+    </div>;
+
   <div className="container mx-auto max-w-md text-center p-4">
     {state.loading
-       ? loadingImage()
-       : <>
-           {dogImage(~data=state.data)}
-           <button
-             className="rounded-md p-4 mt-2 bg-green-500 text-white hover:bg-green-600"
-             onClick={_ => {
-               dispatch(Loading);
-               fetchImage(data => dispatch(Loaded(data)));
-             }}>
-             {React.string("Fetch another image")}
-           </button>
-         </>}
+       ? loadingImage() : <> {dogImage(~data=state.data)} {buttons()} </>}
   </div>;
 };
