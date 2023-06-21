@@ -61,7 +61,7 @@ let make = () => {
   let dogImage = (~data: api_result) =>
     <img
       src={data.status != "success" ? "/500.jpg" : data.message}
-      alt="dog"
+      alt={data.status != "success" ? "error dog" : "dog"}
       className="mx-auto"
     />;
 
