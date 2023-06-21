@@ -7,10 +7,7 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro",
-    "dune": "dune build --watch @reason",
-    "dune:build": "dune build @reason",
-    "dune:clean": "dune clean"
+    "astro": "astro"
   },
   "dependencies": {
     "@astrojs/react": "^2.2.1",
