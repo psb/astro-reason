@@ -59,12 +59,14 @@ let make = () => {
   let loadingImage = () => <img src="/dog.svg" alt="dog" />;
 
   let dogImage = (~data: api_result) =>
-    <div>
+    <div className="text-center">
       <img
         src={data.status != "success" ? "/500.jpg" : data.message}
         alt="dog"
+        className="mx-auto"
       />
       <button
+        className="rounded-md p-4 mt-2 bg-green-500 text-white hover:bg-green-600"
         onClick={_ => {
           dispatch(Loading);
           fetchImage(data => dispatch(Loaded(data)));
@@ -73,7 +75,7 @@ let make = () => {
       </button>
     </div>;
 
-  <div className="">
+  <div className="container mx-auto max-w-md p-4">
     {state.loading ? loadingImage() : dogImage(~data=state.data)}
   </div>;
 };
