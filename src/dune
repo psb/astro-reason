@@ -1,6 +1,6 @@
 (melange.emit
- (target output)
- (alias reason)
+ (target reason_react_output)
+ (alias react)
  (promote (until-clean))
  (libraries reason-react melange-fetch bs_json components)
  (preprocess
@@ -8,8 +8,8 @@
  (module_systems es6))
 
 (melange.emit
- (target lambdas)
+ (target reason_node_output)
  (alias node)
  (promote (until-clean))
- (libraries functions)
+ (libraries lambdas)
  (module_systems commonjs))

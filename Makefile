@@ -27,12 +27,12 @@ install: ## Install development dependencies
 
 .PHONY: build
 build: ## Build the project
-	$(DUNE) build @reason @node
+	$(DUNE) build @react @node
 	npm run build
 
 .PHONY: build_verbose
 build_verbose: ## Build the project
-	$(DUNE) build --verbose @reason @node
+	$(DUNE) build --verbose @react @node
 	npm run build
 
 .PHONY: dev
@@ -61,4 +61,4 @@ format-check: ## Checks if format is correct
 
 .PHONY: watch
 watch: ## Watch for the filesystem and rebuild on every change
-	$(DUNE) build --watch @reason @node
+	$(DUNE) build --watch @react @node
