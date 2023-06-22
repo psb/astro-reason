@@ -1,0 +1,3 @@
+(library
+ (name functions)
+ (modes melange))

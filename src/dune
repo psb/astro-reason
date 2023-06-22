@@ -1,8 +1,15 @@
 (melange.emit
  (target output)
- (promote (until-clean))
  (alias reason)
+ (promote (until-clean))
  (libraries reason-react melange-fetch bs_json components)
  (preprocess
   (pps reactjs-jsx-ppx))
  (module_systems es6))
+
+(melange.emit
+ (target lambdas)
+ (alias node)
+ (promote (until-clean))
+ (libraries functions)
+ (module_systems commonjs))
