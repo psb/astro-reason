@@ -3,4 +3,4 @@
  (libraries reason-react bs_json melange-fetch)
  (modes melange)
  (preprocess
-  (pps reactjs-jsx-ppx melange.ppx)))
+  (pps reactjs-jsx-ppx)))
