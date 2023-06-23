@@ -2,6 +2,8 @@
 
 This is a basic project that shows you how you can mix [Astro](https://docs.astro.build) with [Reason](https://reasonml.github.io/en) and [Reason React](https://reasonml.github.io/reason-react/en). The project uses [Melange](https://melange.re/v1.0.0/) to transform the Reason code to JS.
 
+This project is deployed at: **TODO**
+
 ## 🚀 Project Structure
 
 ```
@@ -41,7 +43,7 @@ This is a basic project that shows you how you can mix [Astro](https://docs.astr
 
 Reason React components are also placed in the components folder (along with their interface files). The `dune` file in the components folder tells Dune how to process the components to JS.
 
-The `dune` file at the root of the project is used to tell Dune how to use any Reason/OCaml packages installed from npm. The `src/dune` file is used to tell Dune how and where to emit JS. It is worth noting that the JS is first built into the `_build` directory (specifically the `_build/default/src/output` folder) and then promoted back out to the `src/output` directory. This makes it easier to import components from astro files.
+The `dune` file at the root of the project is used to tell Dune how to use any Reason/OCaml packages installed from npm. The `src/dune` file is used to tell Dune how and where to emit JS. It is worth noting that the JS is first built into the `_build` directory (specifically the `_build/default/src/output` folder) and then "promoted" back out to the `src/output` directory. This makes it easier to import components from astro files and to use the JS build system (although copying the Reason lambda function output to the Netlify functions folder seems like a bit of a hack).
 
 **TODO**: functions
 
@@ -86,6 +88,10 @@ make watch
 # in another terminal run:
 make dev
 ```
+
+## Dev Issues
+
+**TODO**
 
 ## 👀 Want to learn more?
 

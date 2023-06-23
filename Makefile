@@ -28,12 +28,12 @@ install: ## Install development dependencies
 .PHONY: build
 build: ## Build the project
 	$(DUNE) build @react @node
-	npm run build
+	bundle
 
 .PHONY: build_verbose
 build_verbose: ## Build the project
 	$(DUNE) build --verbose @react @node
-	npm run build
+	bundle
 
 .PHONY: dev
 dev: ## Serve the application with a local HTTP server
@@ -45,6 +45,8 @@ preview: ## Preview the built JS
 
 .PHONY: bundle
 bundle: ## Bundle the JS
+	rm netlify/functions/*.js
+	cp src/reason_node_output/src/reason_netlify_functions/*.js netlify/functions
 	npm run build
 
 .PHONY: clean

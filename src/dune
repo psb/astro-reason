@@ -11,5 +11,5 @@
  (target reason_node_output)
  (alias node)
  (promote (until-clean))
- (libraries lambdas)
+ (libraries reason_netlify_functions)
  (module_systems commonjs))

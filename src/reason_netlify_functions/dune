@@ -1,0 +1,3 @@
+(library
+ (name reason_netlify_functions)
+ (modes melange))
