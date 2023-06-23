@@ -23,3 +23,6 @@ pnpm-debug.log*
 # opam
 _build
 _opam
+
+# Local Netlify folder
+.netlify

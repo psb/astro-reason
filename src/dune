@@ -6,10 +6,3 @@
  (preprocess
   (pps reactjs-jsx-ppx))
  (module_systems es6))
-
-(melange.emit
- (target reason_node_output)
- (alias node)
- (promote (until-clean))
- (libraries reason_netlify_functions)
- (module_systems commonjs))
