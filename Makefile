@@ -39,14 +39,16 @@ build_verbose: ## Build the project
 dev: ## Serve the application with a local HTTP server
 	npm run dev
 
+.PHONY: netlify
+netlify: ## Serve the application using netlify and with netlify functions
+	BROWSER=none netlify dev
+
 .PHONY: preview
 preview: ## Preview the built JS
 	npm run preview
 
 .PHONY: bundle
 bundle: ## Bundle the JS
-	rm netlify/functions/*.js
-	cp src/reason_node_output/src/reason_netlify_functions/*.js netlify/functions
 	npm run build
 
 .PHONY: clean

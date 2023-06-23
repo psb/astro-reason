@@ -2,6 +2,14 @@
 'use strict';
 
 
-console.log("Hello");
+function handler(_event, _context, callback) {
+  return callback(null, {
+              statusCode: 200,
+              body: JSON.stringify({
+                    message: "Hello World"
+                  })
+            });
+}
 
-/*  Not a pure module */
+exports.handler = handler;
+/* No side effect */
