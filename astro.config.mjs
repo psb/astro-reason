@@ -9,6 +9,11 @@ export default defineConfig({
   integrations: [tailwind(), react()],
   vite: {
     plugins: [resolve()],
+    server: {
+      watch: {
+        ignored: ["**/_build/**", "**/_opam/**"],
+      },
+    },
   },
   output: "server",
   adapter: netlify(),
