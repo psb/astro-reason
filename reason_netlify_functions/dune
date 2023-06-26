@@ -1,6 +1,6 @@
 (library
  (name reason_netlify_functions)
- (libraries bs_json)
+ (libraries bs_json melange-fetch)
  (modes melange)
  (preprocess
   (pps reactjs-jsx-ppx melange.ppx)))

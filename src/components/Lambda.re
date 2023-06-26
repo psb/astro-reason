@@ -1,16 +1,16 @@
-type lambda_result = {
+type joke = {
   joke: string,
   status: int,
   count: int,
 };
 
 type state = {
-  data: lambda_result,
+  data: joke,
   loading: bool,
 };
 
 type action =
-  | Loaded(lambda_result)
+  | Loaded(joke)
   | Loading;
 
 let initialState = {
@@ -21,16 +21,46 @@ let initialState = {
   },
   loading: false,
 };
-let decodeFetchResult = (json): lambda_result =>
+
+let decodeFetchResult = (json): joke =>
   Json.Decode.{
     joke: json |> field("joke", string),
     status: json |> field("status", int),
     count: json |> field("count", int),
   };
 
+// let fetchJoke = (callback, currentCount) => {
+//   Js.Promise.(
+//     Fetch.fetch(".netlify/functions/joke")
+//     |> then_(Fetch.Response.json)
+//     |> then_(json => {
+//          let data = decodeFetchResult(json);
+//          callback(data);
+//          resolve();
+//        })
+//     |> catch(err => {
+//          let data = {joke: "", status: 0, count: currentCount};
+//          Js.log2("Error", err);
+//          callback(data);
+//          resolve();
+//        })
+//     |> ignore
+//   );
+// };
 let fetchJoke = (callback, currentCount) => {
+  let payload = Js.Dict.empty();
+  Js.Dict.set(payload, "count", Json.Encode.int(initialState.data.count));
   Js.Promise.(
-    Fetch.fetch("https://dog.ceo/api/breeds/image/random")
+    Fetch.fetchWithInit(
+      ".netlify/functions/joke",
+      Fetch.RequestInit.make(
+        ~method_=Post,
+        ~body=
+          Fetch.BodyInit.make(Js.Json.stringify(Js.Json.object_(payload))),
+        ~headers=Fetch.HeadersInit.make({"Content-Type": "application/json"}),
+        (),
+      ),
+    )
     |> then_(Fetch.Response.json)
     |> then_(json => {
          let data = decodeFetchResult(json);
