@@ -77,6 +77,7 @@ function Lambda(Props) {
                                             }, Caml_option.some(JSON.stringify(payload)), undefined, undefined, undefined)(undefined, undefined, undefined, undefined, undefined), undefined, undefined)).then(function (prim) {
                                   return prim.json();
                                 }).then(function (json) {
+                                console.log("Json: ", json);
                                 var data = decodeFetchResult(json);
                                 Curry._1(callback, data);
                                 return Promise.resolve(undefined);

@@ -63,6 +63,7 @@ let fetchJoke = (callback, currentCount) => {
     )
     |> then_(Fetch.Response.json)
     |> then_(json => {
+         Js.log2("Json: ", json);
          let data = decodeFetchResult(json);
          callback(data);
          resolve();
