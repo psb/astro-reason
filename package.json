@@ -10,13 +10,13 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/netlify": "^2.3.0",
     "@astrojs/react": "^2.2.1",
     "@astrojs/tailwind": "^4.0.0",
+    "@astrojs/vercel": "^3.5.1",
     "@glennsl/bs-json": "^5.0.4",
     "@types/react": "^18.2.13",
     "@types/react-dom": "^18.2.6",
-    "astro": "^2.7.0",
+    "astro": "^2.7.1",
     "isomorphic-fetch": "^3.0.0"
   },
   "devDependencies": {

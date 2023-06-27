@@ -9,8 +9,8 @@
    (modes melange))))
 
 (melange.emit
- (target reason_node_output)
+ (target api)
  (alias node)
  (promote (until-clean))
- (libraries reason_netlify_functions)
+ (libraries reason_lambda_functions)
  (module_systems commonjs))
