@@ -26,3 +26,4 @@ _opam
 
 # Local Netlify folder
 .netlify
+.vercel

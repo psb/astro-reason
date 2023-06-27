@@ -52,7 +52,7 @@ let fetchJoke = (callback, currentCount) => {
   Js.Dict.set(payload, "count", Json.Encode.int(initialState.data.count));
   Js.Promise.(
     Fetch.fetchWithInit(
-      ".netlify/functions/joke",
+      "/api/reason_lambda_functions/joke",
       Fetch.RequestInit.make(
         ~method_=Post,
         ~body=
