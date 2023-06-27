@@ -5,7 +5,7 @@
 //     cookies: request.cookies,
 //   });
 // }
-[%raw "require('isomorphic-fetch')"];
+[%bs.raw "import * as fetch from 'isomorphic-fetch'"];
 
 type event = {
   .

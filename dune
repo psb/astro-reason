@@ -13,4 +13,4 @@
  (alias node)
  (promote (until-clean))
  (libraries reason_lambda_functions)
- (module_systems commonjs))
+ (module_systems es6))
