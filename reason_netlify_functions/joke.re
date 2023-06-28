@@ -4,7 +4,7 @@
 //     body: JSON.stringify({ message: "Hello World" }),
 //   };
 // };
-[%raw "require('isomorphic-fetch')"];
+[%%bs.raw "require('isomorphic-fetch')"];
 
 type event = {
   .
@@ -40,13 +40,13 @@ type joke_result = {
 
 // type handler = (event, context, callback) => t;
 
-// let decodePostBody = (json_string): joke_count => {
-//   let jc = Json.parse(json_string);
-//   switch (jc) {
-//   | Some(json) => Json.Decode.{count: json |> field("count", int)}
-//   | None => {count: 0}
-//   };
-// };
+let decodePostBody = (json_string): joke_count => {
+  let jc = Json.parse(json_string);
+  switch (jc) {
+  | Some(json) => Json.Decode.{count: json |> field("count", int)}
+  | None => {count: 0}
+  };
+};
 
 // let decodeFetchResult = (json): joke_result =>
 //   Json.Decode.{
@@ -56,70 +56,70 @@ type joke_result = {
 //   };
 
 let fetchJoke = () =>
-  Js.Promise.
-    // Fetch.fetch("https://icanhazdadjoke.com/")
-    (
-      Fetch.fetchWithInit(
-        "https://icanhazdadjoke.com/",
-        Fetch.RequestInit.make(
-          ~method_=Get,
-          ~headers=
-            Fetch.HeadersInit.make({"Content-Type": "application/json"}),
-          (),
-        ),
-      )
-      |> then_(Fetch.Response.json)
-      |> then_(json => {
-           Js.log2("Json", json);
+  Js.Promise.(
+    Fetch.fetchWithInit(
+      "https://icanhazdadjoke.com/",
+      Fetch.RequestInit.make(
+        ~method_=Get,
+        ~headers=Fetch.HeadersInit.make({"Content-Type": "application/json"}),
+        (),
+      ),
+    )
+    |> then_(Fetch.Response.json)
+    |> then_(json => {
+         Js.log2("Server Json", json);
 
-           //  json |> decodeFetchResult |> (joke => Some(joke) |> resolve)
-           resolve(Ok(json));
-         })
-      |> catch(err => {resolve(Error(err))})
-    );
+         //  json |> decodeFetchResult |> (joke => Some(joke) |> resolve)
+         resolve(Ok(json));
+       })
+    |> catch(err => {
+         Js.log2("server Error Json", err);
+         resolve(Error(err));
+       })
+  );
 
 let handler = (event, _context, callback) => {
-  Js.log2("Event", event);
-  // let jokeCount = decodePostBody(event.body);
+  let jokeCount = decodePostBody(event.body);
+  Js.log2("jc", jokeCount);
 
-  // let _ =
-  fetchJoke()
-  |> Js.Promise.then_(res => {
-       switch (res) {
-       | Ok(data) =>
-         //  let json = decodeFetchResult(data);
-         Js.log2("Data", data);
+  let _ =
+    fetchJoke()
+    |> Js.Promise.then_(res => {
+         switch (res) {
+         | Ok(data) =>
+           //  let json = decodeFetchResult(data);
+           Js.log2("Data", data);
 
-         let body =
-           Js.Json.stringify(
-             Obj.magic(
-               {
-                 //  "joke": json.joke,
-                 //  "count": jokeCount.count + 1,
-                 //  "status": json.status,
-                 data;
-               },
-             ),
-           );
-         callback(. None, {statusCode: 200, body}, ());
-       | Error(err) =>
-         let body =
-           Js.Json.stringify(
-             Obj.magic(
-               {
-                 //  "joke": err,
-                 //  "count": jokeCount.count,
-                 //  "status": 500,
-                 err;
-               },
-             ),
-           );
-         callback(. None, {statusCode: 500, body}, ());
-         ();
-       };
-       Js.Promise.resolve();
-     });
-  // ();
+           let body =
+             Js.Json.stringify(
+               Obj.magic(
+                 {
+                   //  "joke": json.joke,
+                   //  "count": jokeCount.count + 1,
+                   //  "status": json.status,
+                   data;
+                 },
+               ),
+             );
+           callback(. None, {statusCode: 200, body}, ());
+         | Error(err) =>
+           let body =
+             Js.Json.stringify(
+               Obj.magic(
+                 {
+                   //  "joke": err,
+                   //  "count": jokeCount.count,
+                   //  "status": 500,
+                   err;
+                 },
+               ),
+             );
+           callback(. None, {statusCode: 500, body}, ());
+           ();
+         };
+         Js.Promise.resolve();
+       });
+  ();
   // ();
   // callback(.
   //   None,
