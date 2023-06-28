@@ -23,50 +23,47 @@ function decodePostBody(json_string) {
   }
 }
 
-function fetchJoke(param) {
-  return fetch("https://icanhazdadjoke.com/", Curry._2(Fetch.RequestInit.make(/* Get */0, {
-                              "Content-Type": "application/json"
-                            }, undefined, undefined, undefined, undefined)(undefined, undefined, undefined, undefined, undefined), undefined, undefined)).then(function (prim) {
-                  return prim.json();
-                }).then(function (json) {
-                console.log("Server Json", json);
-                return Promise.resolve({
-                            TAG: /* Ok */0,
-                            _0: json
-                          });
-              }).catch(function (err) {
-              console.log("server Error Json", err);
-              return Promise.resolve({
-                          TAG: /* Error */1,
-                          _0: err
-                        });
-            });
+function decodeFetchResult(json) {
+  return {
+          joke: Json_decode.field("joke", Json_decode.string, json),
+          id: Json_decode.field("id", Json_decode.string, json),
+          status: Json_decode.field("status", Json_decode.$$int, json)
+        };
 }
 
 function handler($$event, _context, callback) {
   var jokeCount = decodePostBody($$event.body);
-  console.log("jc", jokeCount);
-  fetchJoke(undefined).then(function (res) {
-        if (res.TAG === /* Ok */0) {
-          var data = res._0;
-          console.log("Data", data);
-          var body = JSON.stringify(data);
-          callback(undefined, {
-                statusCode: 200,
-                body: body
-              }, undefined);
-        } else {
-          var body$1 = JSON.stringify(res._0);
-          callback(undefined, {
-                statusCode: 500,
-                body: body$1
-              }, undefined);
-        }
-        return Promise.resolve(undefined);
-      });
+  return fetch("https://icanhazdadjoke.com/", Curry._2(Fetch.RequestInit.make(/* Get */0, {
+                              Accept: "application/json",
+                              "User-Agent": "astro-reason (https://github.com/psb/astro-reason)"
+                            }, undefined, undefined, undefined, undefined)(undefined, undefined, undefined, undefined, undefined), undefined, undefined)).then(function (prim) {
+                  return prim.json();
+                }).then(function (json) {
+                var data = decodeFetchResult(json);
+                var body = JSON.stringify({
+                      joke: data.joke,
+                      count: jokeCount.count + 1 | 0,
+                      status: data.status
+                    });
+                return Promise.resolve(callback(undefined, {
+                                statusCode: 200,
+                                body: body
+                              }, undefined));
+              }).catch(function (err) {
+              console.log("server Error Json", err);
+              var body = JSON.stringify({
+                    joke: err,
+                    count: jokeCount.count,
+                    status: 500
+                  });
+              return Promise.resolve(callback(undefined, {
+                              statusCode: 500,
+                              body: body
+                            }, undefined));
+            });
 }
 
 exports.decodePostBody = decodePostBody;
-exports.fetchJoke = fetchJoke;
+exports.decodeFetchResult = decodeFetchResult;
 exports.handler = handler;
 /*  Not a pure module */

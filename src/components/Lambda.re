@@ -29,27 +29,9 @@ let decodeFetchResult = (json): joke =>
     count: json |> field("count", int),
   };
 
-// let fetchJoke = (callback, currentCount) => {
-//   Js.Promise.(
-//     Fetch.fetch(".netlify/functions/joke")
-//     |> then_(Fetch.Response.json)
-//     |> then_(json => {
-//          let data = decodeFetchResult(json);
-//          callback(data);
-//          resolve();
-//        })
-//     |> catch(err => {
-//          let data = {joke: "", status: 0, count: currentCount};
-//          Js.log2("Error", err);
-//          callback(data);
-//          resolve();
-//        })
-//     |> ignore
-//   );
-// };
 let fetchJoke = (callback, currentCount) => {
   let payload = Js.Dict.empty();
-  Js.Dict.set(payload, "count", Json.Encode.int(initialState.data.count));
+  Js.Dict.set(payload, "count", Json.Encode.int(currentCount));
   Js.Promise.(
     Fetch.fetchWithInit(
       ".netlify/functions/joke",
@@ -63,7 +45,6 @@ let fetchJoke = (callback, currentCount) => {
     )
     |> then_(Fetch.Response.json)
     |> then_(json => {
-         Js.log2("Client Json: ", json);
          let data = decodeFetchResult(json);
          callback(data);
          resolve();
@@ -90,15 +71,22 @@ let make = () => {
       initialState,
     );
 
-  let loadingImage = () => <img src="/laugh.svg" alt="laugh" />;
+  let loadingImage = () =>
+    <img src="/laugh.svg" alt="laugh" width="200" className="mx-auto" />;
 
   let errorImage = () =>
     <img src="/500.jpg" alt="error dog" className="mx-auto" />;
 
-  let joke = text =>
-    <p className="p-6 mb-2 rounded-lg text-lg bg-yellow-400">
-      {React.string(text)}
-    </p>;
+  let joke = data =>
+    <>
+      <p className="p-6 mb-2 rounded-lg text-lg bg-yellow-400">
+        {React.string(data.joke)}
+      </p>
+      <p className="p-2 mb-2 rounded-md bg-orange-300">
+        {let count = data.count;
+         React.string({j|You have requested $count jokes.|j})}
+      </p>
+    </>;
 
   let buttons = currentCount =>
     <div className="flex justify-around">
@@ -121,7 +109,7 @@ let make = () => {
     {state.loading
        ? loadingImage()
        : <>
-           {state.data.status != 200 ? errorImage() : joke(state.data.joke)}
+           {state.data.status != 200 ? errorImage() : joke(state.data)}
            {buttons(state.data.count)}
          </>}
   </div>;
