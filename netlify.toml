@@ -1,2 +1,9 @@
 [functions]
 directory = "reason_node_output/reason_netlify_functions"
+external_node_modules = [
+    "./reason_node_output/node_modules/@glennsl",
+    "./reason_node_output/node_modules/melange",
+    "./reason_node_output/node_modules/melange-fetch",
+    "./reason_node_output/node_modules/melange.belt",
+    "./reason_node_output/node_modules/melange.runtime",
+]
