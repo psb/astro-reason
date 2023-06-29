@@ -2,20 +2,18 @@ on:
   pull_request:
   push:
    branches:
-     - main
      - master
-     - gh-workflows
-  schedule:
-    # Prime the caches every Monday
-    - cron: 0 1 * * MON
+  # schedule:
+  #   # Prime the caches every Monday
+  #   - cron: 0 1 * * MON
 
 jobs:
   build-project:
-    name: Build project
+    name: Build project and deploy to netlify
     strategy:
       matrix:
         system:
-          - macos-latest
+          # - macos-latest
           - ubuntu-latest
           # - windows-latest # for some reason windows build is not picking dune 3.5
         ocaml-compiler:
@@ -44,6 +42,11 @@ jobs:
       - name: Bundle React app
         run: make bundle
 
-      # - name: Run Node app
-      #   run: |
-      #     node _build/default/src/node/src/Hello.js
+      - name: Deploy to netlify
+        uses: netlify/actions/cli@master
+        with:
+          args: deploy --prod
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+
