@@ -49,5 +49,5 @@ jobs:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         with:
           publish-dir: './dist'
-          functions-dir: 'reason_node_output/reason_netlify_functions'
+          functions-dir: './reason_node_output/reason_netlify_functions'
           production-deploy: true
