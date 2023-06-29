@@ -42,7 +42,7 @@ let decodeFetchResult = (json): joke_result =>
 
 let handler = (event, _context, callback) => {
   let jokeCount = decodePostBody(event.body);
-
+  Js.log2("jokeCount", jokeCount);
   Js.Promise.(
     Fetch.fetchWithInit(
       "https://icanhazdadjoke.com/",
@@ -58,6 +58,7 @@ let handler = (event, _context, callback) => {
     )
     |> then_(Fetch.Response.json)
     |> then_(json => {
+         Js.log2("json", json);
          let data = decodeFetchResult(json);
          let body =
            Js.Json.stringify(
