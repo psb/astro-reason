@@ -16,11 +16,7 @@
     "@types/react": "^18.2.13",
     "@types/react-dom": "^18.2.6",
     "astro": "^2.7.0",
-    "isomorphic-fetch": "^3.0.0",
-    "melange": "file: ./reason_node_output/node_modules/melange" ,
-    "melange-fetch": "file: ./reason_node_output/node_modules/melange-fetch" ,
-    "melange.belt": "file: ./reason_node_output/node_modules/melange.belt" ,
-    "melange.runtime": "file: ./reason_node_output/node_modules/melange.runtime"
+    "isomorphic-fetch": "^3.0.0"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^15.1.0"

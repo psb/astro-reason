@@ -26,3 +26,5 @@ _opam
 
 # Local Netlify folder
 .netlify
+
+!reason_node_output/node_modules
