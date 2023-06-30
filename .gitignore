@@ -1,5 +1,5 @@
 # build output
-# dist/
+dist/
 
 # generated types
 .astro/
@@ -27,4 +27,5 @@ _opam
 # Local Netlify folder
 .netlify
 
+!src/reason_react_output/node_modules
 !reason_node_output/node_modules
