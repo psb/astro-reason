@@ -20,7 +20,7 @@ init: create-switch install ## Configure everything to develop this repository i
 
 .PHONY: install
 install: ## Install development dependencies
-	npm install --legacy-peer-deps
+	npm install
 	opam update
 	opam install -y . --deps-only
 	opam pin -y add $(project_name).dev .
@@ -28,12 +28,10 @@ install: ## Install development dependencies
 .PHONY: build
 build: ## Build the project
 	$(DUNE) build @react @node
-	bundle
 
 .PHONY: build_verbose
 build_verbose: ## Build the project
 	$(DUNE) build --verbose @react @node
-	bundle
 
 .PHONY: dev
 dev: ## Serve the application with a local HTTP server

@@ -39,8 +39,10 @@ function Lambda(Props) {
   var state = match[0];
   var loadingImage = function (param) {
     return React.createElement("img", {
+                className: "mx-auto",
                 alt: "laugh",
-                src: "/laugh.svg"
+                src: "/laugh.svg",
+                width: "200"
               });
   };
   var errorImage = function (param) {
@@ -50,10 +52,13 @@ function Lambda(Props) {
                 src: "/500.jpg"
               });
   };
-  var joke = function (text) {
-    return React.createElement("p", {
-                className: "p-6 mb-2 rounded-lg text-lg bg-yellow-400"
-              }, text);
+  var joke = function (data) {
+    var count = data.count;
+    return React.createElement(React.Fragment, undefined, React.createElement("p", {
+                    className: "p-6 mb-2 rounded-lg text-lg bg-yellow-400"
+                  }, data.joke), React.createElement("p", {
+                    className: "p-2 mb-2 rounded-md bg-orange-300"
+                  }, "You have requested " + count + " jokes."));
   };
   var buttons = function (currentCount) {
     return React.createElement("div", {
@@ -71,7 +76,7 @@ function Lambda(Props) {
                               });
                         };
                         var payload = {};
-                        payload["count"] = 0;
+                        payload["count"] = currentCount;
                         fetch("/api/reason_lambda_functions/joke", Curry._2(Fetch.RequestInit.make(/* Post */2, {
                                               "Content-Type": "application/json"
                                             }, Caml_option.some(JSON.stringify(payload)), undefined, undefined, undefined)(undefined, undefined, undefined, undefined, undefined), undefined, undefined)).then(function (prim) {
@@ -95,7 +100,7 @@ function Lambda(Props) {
   };
   return React.createElement("div", {
               className: "container mx-auto max-w-md text-center p-4"
-            }, state.loading ? loadingImage(undefined) : React.createElement(React.Fragment, undefined, state.data.status !== 200 ? errorImage(undefined) : joke(state.data.joke), buttons(state.data.count)));
+            }, state.loading ? loadingImage(undefined) : React.createElement(React.Fragment, undefined, state.data.status !== 200 ? errorImage(undefined) : joke(state.data), buttons(state.data.count)));
 }
 
 var make = Lambda;

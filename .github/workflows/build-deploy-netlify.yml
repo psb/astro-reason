@@ -1,0 +1,52 @@
+on:
+  pull_request:
+  push:
+   branches:
+     - master
+  # schedule:
+  #   # Prime the caches every Monday
+  #   - cron: 0 1 * * MON
+
+jobs:
+  build-project:
+    name: Build project and deploy to netlify
+    strategy:
+      matrix:
+        system:
+          # - macos-latest
+          - ubuntu-latest
+          # - windows-latest # for some reason windows build is not picking dune 3.5
+        ocaml-compiler:
+          - 4.14.x
+
+      fail-fast: false
+    runs-on: ${{ matrix.system }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: current
+
+      - name: Use OCaml ${{ matrix.ocaml-compiler }}
+        uses: ocaml/setup-ocaml@v2
+        with:
+          ocaml-compiler: ${{ matrix.ocaml-compiler }}
+
+      - name: Install all deps
+        run: make install
+
+      - name: Build Reason to JS
+        run: make build
+
+      - name: Bundle React app
+        run: make bundle
+
+      - name: Deploy to netlify
+        uses: netlify/actions/cli@master
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        with:
+          # args: deploy --dir=dist --functions=reason_node_output/reason_netlify_functions --prod
+          args: deploy --prod

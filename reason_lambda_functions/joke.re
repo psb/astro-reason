@@ -1,11 +1,4 @@
-// export default function handler(request, response) {
-//   response.status(200).json({
-//     body: request.body,
-//     query: request.query,
-//     cookies: request.cookies,
-//   });
-// }
-[%bs.raw "import * as fetch from 'isomorphic-fetch'"];
+[%%bs.raw "require('isomorphic-fetch')"];
 
 type event = {
   .
@@ -20,10 +13,7 @@ type event = {
 type context = unit;
 
 type response = {
-  // .
-  // "isBase64Encoded": bool,
   statusCode: int,
-  // headers: Js.Dict.t(string),
   body: string,
 };
 
@@ -34,96 +24,63 @@ type joke_result = {
   id: string,
   status: int,
 };
-// type complete;
 
-// type callback = (option(Js.Exn.t), response) => complete;
+let decodePostBody = (json_string): joke_count => {
+  let jc = Json.parse(json_string);
+  switch (jc) {
+  | Some(json) => Json.Decode.{count: json |> field("count", int)}
+  | None => {count: 0}
+  };
+};
 
-// type handler = (event, context, callback) => complete;
+let decodeFetchResult = (json): joke_result =>
+  Json.Decode.{
+    joke: json |> field("joke", string),
+    id: json |> field("id", string),
+    status: json |> field("status", int),
+  };
 
-// let decodePostBody = (json_string): joke_count => {
-//   let jc = Json.parse(json_string);
-//   switch (jc) {
-//   | Some(json) => Json.Decode.{count: json |> field("count", int)}
-//   | None => {count: 0}
-//   };
-// };
-
-// let decodeFetchResult = (json): joke_result =>
-//   Json.Decode.{
-//     joke: json |> field("joke", string),
-//     id: json |> field("id", string),
-//     status: json |> field("status", int),
-//   };
-
-let fetchJoke = () =>
+let handler = (event, _context, callback) => {
+  let jokeCount = decodePostBody(event.body);
+  Js.log2("jokeCount", jokeCount);
   Js.Promise.(
-    Fetch.fetch("https://icanhazdadjoke.com/")
+    Fetch.fetchWithInit(
+      "https://icanhazdadjoke.com/",
+      Fetch.RequestInit.make(
+        ~method_=Get,
+        ~headers=
+          Fetch.HeadersInit.make({
+            "Accept": "application/json",
+            "User-Agent": "astro-reason (https://github.com/psb/astro-reason)",
+          }),
+        (),
+      ),
+    )
     |> then_(Fetch.Response.json)
     |> then_(json => {
-         //  json |> decodeFetchResult |> (joke => Some(joke) |> resolve)
-         resolve(
-           Ok(json),
-         )
+         Js.log2("json", json);
+         let data = decodeFetchResult(json);
+         let body =
+           Js.Json.stringify(
+             Obj.magic({
+               "joke": data.joke,
+               "count": jokeCount.count + 1,
+               "status": data.status,
+             }),
+           );
+         resolve(callback(. None, {statusCode: 200, body}, ()));
        })
-    |> catch(err => {resolve(Error(err))})
-  );
-
-let handler = (request, _response) => {
-  Js.log2(
-    "Request",
-    request,
-    // let jokeCount = decodePostBody(event.body);
-    // let _ =
-    //   fetchJoke()
-    //   |> Js.Promise.then_(res => {
-    //        switch (res) {
-    //        | Ok(data) =>
-    //         //  let json = decodeFetchResult(data);
-    //          let body =
-    //            Js.Json.stringify(
-    //              Obj.magic({
-    //                "joke": json.joke,
-    //                "count": jokeCount.count + 1,
-    //                "status": json.status,
-    //              }),
-    //            );
-    //          callback(. None, {statusCode: json.status, body}, ());
-    //        | Error(err) =>
-    //          let body =
-    //            Js.Json.stringify(
-    //              Obj.magic({
-    //                "joke": err,
-    //                "count": jokeCount.count,
-    //                "status": 500,
-    //              }),
-    //            );
-    //          callback(. None, {statusCode: 500, body}, ());
-    //          ();
-    //        };
-    //        Js.Promise.resolve();
-    //      });
-    // ();
-    // callback(.
-    //   None,
-    //   {
-    //     statusCode: 200,
-    //     // headers: Js.Dict.fromList([("Content-Type", "application/json")]),
-    //     // Json.Encode.object_([
-    //     //   ("Content-Type", Json.Encode.string("application/json")),
-    //     // ])
-    //     body:
-    //       // Json.Encode.object_([
-    //       //   ("message", Json.Encode.string("Hello World")),
-    //       // ])
-    //       // |> Json.stringify,
-    //       Js.Json.stringify(
-    //         Obj.magic({
-    //           "joke": newJoke.joke,
-    //           "count": jokeCount.count + 1,
-    //           "status": 200,
-    //         }),
-    //       ),
-    //   },
-    // );
+    |> catch(err => {
+         Js.log2("server Error Json", err);
+         let body =
+           Js.Json.stringify(
+             Obj.magic({
+               "joke": err,
+               "count": jokeCount.count,
+               "status": 500,
+             }),
+           );
+         resolve(callback(. None, {statusCode: 500, body}, ()));
+       })
   );
 };

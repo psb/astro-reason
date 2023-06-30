@@ -1,10 +1,11 @@
 # Ignore all files.
 *.*
 # Unignore:
-!*.html
-!*.js
-!*.mjs
-!*.css
-!*.md
-!*.astro
-!*.cjs
+!**.html
+!**.js
+!**.mjs
+!**.css
+!**.md
+!**.astro
+!**.cjs
+!**.yml
