@@ -1,14 +1,14 @@
-[build]
-publish = "dist/"
+# [build]
+# publish = "dist/"
 
 [functions]
 directory = "reason_node_output/reason_netlify_functions"
-node_bundler = "esbuild"
-external_node_modules = [
-    # "astro",
-    "@glennsl",
-    "melange",
-    "melange-fetch",
-    "melange.belt",
-    "melange.runtime",
-]
+# node_bundler = "esbuild"
+# external_node_modules = [
+#     # "astro",
+#     "@glennsl",
+#     "melange",
+#     "melange-fetch",
+#     "melange.belt",
+#     "melange.runtime",
+# ]
