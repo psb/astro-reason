@@ -1,5 +1,6 @@
 [build]
-publish = "dist/"
+# Comment out for netlify dev
+# publish = "dist/"
 
 [functions]
 directory = "reason_node_output/reason_netlify_functions"

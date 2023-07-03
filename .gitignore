@@ -26,8 +26,3 @@ _opam
 
 # Local Netlify folder
 .netlify
-
-# Local Vercel folder
-.vercel
-# !src/reason_react_output/node_modules
-# !reason_node_output/node_modules

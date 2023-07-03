@@ -25,19 +25,9 @@
   (flags
    (:standard -warn-error -A))))
 
-; Netlify
-
 (melange.emit
  (target reason_node_output)
  (alias node)
  (promote (until-clean))
  (libraries reason_netlify_functions)
  (module_systems es6))
-
-; Vercel
-; (melange.emit
-;  (target api)
-;  (alias node)
-;  (promote (until-clean))
-;  (libraries reason_lambda_functions)
-;  (module_systems es6))
