@@ -37,6 +37,9 @@ jobs:
       - name: Install all deps
         run: make install
 
+      - name: Copy bs-decoders shims
+        run: cp ./node_modules/bs-decoders/src-bs/shims_let_ops_.ml ./node_modules/bs-decoders/src
+
       - name: Build Reason to JS
         run: make build
 
