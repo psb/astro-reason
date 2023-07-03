@@ -50,8 +50,9 @@ jobs:
         # uses: netlify/actions/cli@master
         uses: nwtgck/actions-netlify@v2.0
         with:
-          publish-dir: './dist'
-          production-branch: netlify-cli-deploy
+          publish-dir: "./dist"
+          functions-dir: "./reason_node_output/reason_netlify_functions"
+          production-branch: master
           netlify-config-path: ./netlify.toml
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
