@@ -1,12 +1,29 @@
 (subdir
  node_modules
  (dirs @glennsl)
+ (data_only_dirs bs-decoders)
  (subdir
   @glennsl/bs-json/src
   (library
    (name bs_json)
    (wrapped false)
-   (modes melange))))
+   (modes melange)))
+ (subdir
+  bs-decoders/src
+  (library
+   (name decoders)
+   (modes melange)))
+ (subdir
+  bs-decoders/src-bs
+  (library
+   (name bs_decoders)
+   (modes melange)
+   (libraries decoders))))
+
+(env
+ (dev
+  (flags
+   (:standard -warn-error -A))))
 
 (melange.emit
  (target api)

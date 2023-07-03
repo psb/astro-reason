@@ -1,6 +1,6 @@
 (library
  (name reason_lambda_functions)
- (libraries bs_json melange-fetch)
+ (libraries bs_decoders melange-fetch)
  (modes melange)
  (preprocess
-  (pps reactjs-jsx-ppx melange.ppx)))
+  (pps melange.ppx)))
