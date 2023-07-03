@@ -47,10 +47,11 @@ jobs:
         run: make bundle
 
       - name: Deploy to netlify
-        uses: netlify/actions/cli@master
+        # uses: netlify/actions/cli@master
+        uses: nwtgck/actions-netlify@v2.0
+        with:
+          publish-dir: './dist'
+          production-branch: netlify-cli-deploy
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-        with:
-          # args: deploy --dir=dist --functions=reason_node_output/reason_netlify_functions --prod
-          args: deploy --prod
