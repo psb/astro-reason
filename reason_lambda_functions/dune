@@ -1,5 +1,5 @@
 (library
- (name reason_netlify_functions)
+ (name reason_lambda_functions)
  (libraries bs_decoders melange-fetch)
  (modes melange)
  (preprocess

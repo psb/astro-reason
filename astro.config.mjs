@@ -2,7 +2,8 @@ import { defineConfig } from "astro/config";
 import tailwind from "@astrojs/tailwind";
 import react from "@astrojs/react";
 import resolve from "@rollup/plugin-node-resolve";
-import netlify from "@astrojs/netlify/functions";
+
+import vercel from "@astrojs/vercel/serverless";
 
 // https://astro.build/config
 export default defineConfig({
@@ -11,10 +12,10 @@ export default defineConfig({
     plugins: [resolve()],
     server: {
       watch: {
-        ignored: ["**/_build/**", "**/_opam/**"],
-      },
-    },
+        ignored: ["**/_build/**", "**/_opam/**"]
+      }
+    }
   },
   output: "server",
-  adapter: netlify(),
+  adapter: vercel()
 });

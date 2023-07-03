@@ -77,7 +77,7 @@ function Lambda(Props) {
                         };
                         var payload = {};
                         payload["count"] = currentCount;
-                        fetch(".netlify/functions/joke", Curry._2(Fetch.RequestInit.make(/* Post */2, {
+                        fetch("/api/reason_lambda_functions/joke", Curry._2(Fetch.RequestInit.make(/* Post */2, {
                                               "Content-Type": "application/json"
                                             }, Caml_option.some(JSON.stringify(payload)), undefined, undefined, undefined)(undefined, undefined, undefined, undefined, undefined), undefined, undefined)).then(function (prim) {
                                   return prim.json();
