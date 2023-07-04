@@ -41,10 +41,6 @@ dev: ## Serve the application with a local HTTP server
 netlify: ## Serve the application using netlify and with netlify functions
 	BROWSER=none netlify dev
 
-.PHONY: vercel
-vercel: ## Serve the application using vercel and with vercel functions
-	vercel dev
-
 .PHONY: preview
 preview: ## Preview the built JS
 	npm run preview
